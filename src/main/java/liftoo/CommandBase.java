@@ -38,7 +38,7 @@ public abstract class CommandBase {
 	}
 	
 	private boolean abort() {
-		if (lift.state().equals(Lift.State.MAINTENANCE) && isExternal) {
+		if (isExternal && lift.isMaintenanceState()) {
 			log.info("A lift does not accept external commands in MAINTENANCE state.");
 			return true;
 		}

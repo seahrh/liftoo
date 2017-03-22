@@ -12,7 +12,7 @@ public class Lift {
 	private boolean isDoorOpen = false;
 	private String id = null;
 
-	protected enum State {
+	private enum State {
 		MAINTENANCE, STAND, UP, DOWN
 	}
 
@@ -79,12 +79,36 @@ public class Lift {
 		this.floor = floor;
 	}
 
-	protected State state() {
-		return state;
+	protected boolean isMaintenanceState() {
+		return state.equals(State.MAINTENANCE);
 	}
-
-	protected void state(State state) {
-		this.state = state;
+	
+	protected void setMaintenanceState() {
+		state = State.MAINTENANCE;
+	}
+	
+	protected boolean isStandState() {
+		return state.equals(State.STAND);
+	}
+	
+	protected void setStandState() {
+		state = State.STAND;
+	}
+	
+	protected boolean isUpState() {
+		return state.equals(State.UP);
+	}
+	
+	protected void setUpState() {
+		state = State.UP;
+	}
+	
+	protected boolean isDownState() {
+		return state.equals(State.DOWN);
+	}
+	
+	protected void setDownState() {
+		state = State.DOWN;
 	}
 
 	protected boolean isDoorOpen() {
