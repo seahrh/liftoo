@@ -9,7 +9,8 @@ public abstract class CommandBase {
 	private boolean isExternal = false;
 	
 	public void execute() {
-		if (abort()) {
+		if (isIllegalOperation()) {
+			log.warn("Illegal operation: command aborted");
 			return;
 		}
 		callReceiver();
@@ -37,7 +38,7 @@ public abstract class CommandBase {
 		this.isExternal = isExternal;
 	}
 	
-	private boolean abort() {
+	private boolean isIllegalOperation() {
 		if (isExternal && lift.isMaintenanceState()) {
 			log.info("A lift does not accept external commands in MAINTENANCE state.");
 			return true;
