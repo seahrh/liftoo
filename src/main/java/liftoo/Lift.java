@@ -9,15 +9,11 @@ public class Lift {
 	private int maxFloor = 1;
 	private int floor = minFloor;
 	private State state = State.STAND;
-	private Door door = Door.CLOSED;
+	private boolean isDoorOpen = false;
 	private String id = null;
 
 	protected enum State {
 		MAINTENANCE, STAND, UP, DOWN
-	}
-
-	protected enum Door {
-		OPEN, CLOSED
 	}
 
 	protected Lift(String id, int minFloor, int maxFloor) {
@@ -91,12 +87,16 @@ public class Lift {
 		this.state = state;
 	}
 
-	protected Door door() {
-		return door;
+	protected boolean isDoorOpen() {
+		return isDoorOpen;
 	}
 
-	protected void door(Door door) {
-		this.door = door;
+	protected void openDoor() {
+		isDoorOpen = true;
+	}
+	
+	protected void closeDoor() {
+		isDoorOpen = false;
 	}
 
 	protected String id() {
