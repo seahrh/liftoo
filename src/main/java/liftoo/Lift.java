@@ -1,5 +1,9 @@
 package liftoo;
 
+import java.util.Collections;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,17 +12,20 @@ public class Lift {
 	
 	public class Defaults {
 		private static final int MIN_FLOOR = 1;
+		private static final int MAX_FLOOR = 20;
 		private static final int MAX_LOAD = 2000;
 	}
 	
 	private int minFloor = Defaults.MIN_FLOOR;
-	private int maxFloor = minFloor;
+	private int maxFloor = Defaults.MAX_FLOOR;
 	private int floor = minFloor;
 	private int load = 0;
 	private int maxLoad = Defaults.MAX_LOAD;
 	private State state = State.STAND;
 	private boolean isDoorOpen = false;
 	private String id = null;
+	private Queue<Integer> upHeap = new PriorityQueue<>(maxFloor);
+	private Queue<Integer> downHeap = new PriorityQueue<>(maxFloor, Collections.reverseOrder());
 
 	private enum State {
 		MAINTENANCE, STAND, UP, DOWN
@@ -54,6 +61,36 @@ public class Lift {
 	
 	public static Lift get(String id, int minFloor, int maxFloor, int maxLoad) {
 		return new Lift(id, maxFloor, minFloor, maxLoad);
+	}
+	
+	protected boolean isUpHeapEmpty() {
+		return upHeap.isEmpty();
+	}
+	
+	protected void enqueueFloorUpward(int floor) {
+		if (upHeap.contains(floor)) {
+			return;
+		}
+		upHeap.add(floor);
+	}
+	
+	protected void dequeueFloorUpward() {
+		upHeap.remove();
+	}
+	
+	protected boolean isDownHeapEmpty() {
+		return downHeap.isEmpty();
+	}
+	
+	protected void enqueueFloorDownward(int floor) {
+		if (downHeap.contains(floor)) {
+			return;
+		}
+		downHeap.add(floor);
+	}
+	
+	protected void dequeueFloorDownward() {
+		downHeap.remove();
 	}
 
 	protected int minFloor() {
