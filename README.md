@@ -1,10 +1,16 @@
 # Object-oriented design of a lift system
 
-## Design
+Uses the [Command pattern](https://en.wikipedia.org/wiki/Command_pattern), which allows for easy logging and flexible for client to issue commands whenever required. It has the following implementing subclasses:
 
-First there is an elevator class. It has a direction (up, down, stand, maintenance), a current floor and a list of floor requests sorted in the direction. It receives request from this elevator.
+- `GoToFloorCommand`
+- `OpenDoorCommand`
+- `CloseDoorCommand`
 
-Then there is a bank. It contains the elevators and receives the requests from the floors. These are scheduled to all active elevators (not in maintenance).
+First there is a `Lift` class. It has a state (up, down, stand, maintenance) and a current floor.
+
+A min-heap is used to store floor requests going up and a max-heap for floor requests going down.
+
+The `LiftScheduler` contains the elevators and receives the requests from the floors. These are scheduled to all active elevators (not in maintenance).
 
 The scheduling will be like:
 
